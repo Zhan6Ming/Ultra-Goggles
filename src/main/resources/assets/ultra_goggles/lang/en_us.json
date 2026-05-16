@@ -1,0 +1,10 @@
+{
+  "itemGroup.ultra_goggles": "Ultra Goggles",
+  "item.ultra_goggles.ultra_goggles": "Ultra Goggles",
+  "key.ultra_goggles.toggle_nightvision": "Toggle Night Vision",
+  "key.ultra_goggles.open_offset_config": "Open Model Offset Config",
+  "key.category.ultra_goggles": "Ultra Goggles",
+  "screen.ultra_goggles.offset_config": "Model Offset Config",
+  "screen.ultra_goggles.offset_config.slider": "Y Offset: %s",
+  "screen.ultra_goggles.offset_config.current": "Current Offset: %s"
+}
