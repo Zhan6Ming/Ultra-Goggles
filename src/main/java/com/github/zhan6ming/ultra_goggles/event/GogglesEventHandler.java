@@ -6,7 +6,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -28,6 +27,12 @@ public class GogglesEventHandler {
         NeoForge.EVENT_BUS.addListener(GogglesEventHandler::onEquipmentChange);
     }
 
+    /**
+     * 切换护目镜的夜视功能状态。
+     * 如果功能已启用则禁用，反之亦然。此方法应在服务器端调用。
+     *
+     * @param player 要切换功能的玩家
+     */
     public static void toggleFeature(Player player) {
         UUID uuid = player.getUUID();
         if (FEATURE_ENABLED.contains(uuid)) {
@@ -38,15 +43,20 @@ public class GogglesEventHandler {
         }
     }
 
+    /**
+     * 获取玩家是否拥有岩浆/水中的特殊视野能力。
+     * 只有穿戴 Ultra Goggles 且启用了功能的玩家才会返回 true。
+     *
+     * @param player 要检查的玩家
+     * @return 玩家是否有岩浆视野
+     */
     public static boolean hasLavaVision(Player player) {
         return HAS_LAVA_VISION.contains(player.getUUID());
     }
 
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
-        @SuppressWarnings("resource")
-        Level level = player.level();
-        if (level.isClientSide()) return;
+        if (player.level().isClientSide()) return;
 
         UUID uuid = player.getUUID();
         boolean wearing = isWearingUltraGoggles(player);
@@ -74,30 +84,19 @@ public class GogglesEventHandler {
         }
     }
 
+    /**
+     * 检查玩家是否穿戴了 Ultra Goggles（头部装备或 Curios 槽位）。
+     * Curios 检查委托给 CuriosCompat 以确保类加载安全。
+     */
     private static boolean isWearingUltraGoggles(Player player) {
         if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof UltraGogglesItem) {
             return true;
         }
         if (net.neoforged.fml.ModList.get().isLoaded("curios")) {
-            return isWearingInCurios(player);
+            // 委托给 CuriosCompat，避免在 Curios 未加载时直接引用 Curios API 类
+            return com.github.zhan6ming.ultra_goggles.compat.curios.CuriosCompat.isWearingUltraGoggles(player);
         }
         return false;
-    }
-
-    private static boolean isWearingInCurios(Player player) {
-        return com.github.zhan6ming.ultra_goggles.compat.curios.CuriosCompat.resolveCuriosMap(player)
-            .map(curiosMap -> {
-                for (var stacksHandler : curiosMap.values()) {
-                    int slots = stacksHandler.getSlots();
-                    for (int slot = 0; slot < slots; slot++) {
-                        if (stacksHandler.getStacks().getStackInSlot(slot).getItem() instanceof UltraGogglesItem) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            })
-            .orElse(false);
     }
 
     private static void clearEffects(Player player) {

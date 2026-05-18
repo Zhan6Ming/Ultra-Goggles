@@ -22,6 +22,10 @@ run
 
 # Backup files
 backup_commented/
+backup/
+
+# IDE
+.vscode/
 
 # Local dependency jars
 libs/

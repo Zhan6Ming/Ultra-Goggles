@@ -39,13 +39,18 @@ public class UltraGogglesCurioRenderer implements ICurioRenderer {
 
         poseStack.pushPose();
 
+        // 16.0: Minecraft 模型坐标到世界坐标的转换因子（1 block = 16 model units）
         poseStack.translate(model.head.x / 16.0, model.head.y / 16.0, model.head.z / 16.0);
+        // 应用头部旋转
         poseStack.mulPose(Axis.ZP.rotation(model.head.zRot));
         poseStack.mulPose(Axis.YP.rotation(model.head.yRot));
         poseStack.mulPose(Axis.XP.rotation(model.head.xRot));
 
+        // -0.25: 向下微调护目镜位置
         poseStack.translate(0, -0.25, 0);
+        // 180.0f: 修正模型朝向（翻转 Z 轴）
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0f));
+        // 0.625f: 缩放比（10/16），适配头部尺寸
         poseStack.scale(0.625f, 0.625f, 0.625f);
 
         // 偏移由 UltraGogglesModel.applyTransform(HEAD) 统一处理，这里不再重复应用

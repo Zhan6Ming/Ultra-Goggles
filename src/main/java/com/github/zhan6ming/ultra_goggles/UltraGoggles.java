@@ -60,7 +60,7 @@ public class UltraGoggles {
         if (ModList.get().isLoaded("curios")) {
             try {
                 com.github.zhan6ming.ultra_goggles.compat.curios.CuriosCompat.init(modEventBus);
-                LOGGER.info("Curios compat enabled");
+                LOGGER.debug("Curios compat enabled");
             } catch (Exception e) {
                 LOGGER.warn("Curios compat failed: {}", e.getMessage());
             }
@@ -73,6 +73,6 @@ public class UltraGoggles {
         com.simibubi.create.content.equipment.goggles.GogglesItem.addIsWearingPredicate(player ->
             player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).getItem() instanceof UltraGogglesItem
         );
-        LOGGER.info("Ultra Goggles common setup complete");
+        LOGGER.debug("Ultra Goggles common setup complete");
     }
 }
