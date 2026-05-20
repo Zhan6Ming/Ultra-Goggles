@@ -1,6 +1,8 @@
 {
   "itemGroup.ultra_goggles": "Create:Ultra Goggles",
   "item.ultra_goggles.ultra_goggles": "Ultra Goggles",
+  "item.ultra_goggles.rough_lens": "Rough Lens",
+  "item.ultra_goggles.ultra_lens": "Ultra Lens",
   "key.ultra_goggles.toggle_nightvision": "Toggle Night Vision",
   "key.ultra_goggles.open_offset_config": "Open Model Offset Config",
   "key.category.ultra_goggles": "Ultra Goggles",

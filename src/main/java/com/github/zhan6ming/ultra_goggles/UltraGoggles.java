@@ -31,6 +31,10 @@ public class UltraGoggles {
         () -> new UltraGogglesItem(new Item.Properties())
     );
 
+    public static final DeferredItem<Item> ROUGH_LENS = ITEMS.registerSimpleItem("rough_lens");
+
+    public static final DeferredItem<Item> ULTRA_LENS = ITEMS.registerSimpleItem("ultra_lens");
+
     @SuppressWarnings("unused") // 注册副作用：类加载时触发 DeferredRegister 注册
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ULTRA_GOGGLES_TAB =
         CREATIVE_MODE_TABS.register("ultra_goggles_tab", () ->
@@ -38,7 +42,11 @@ public class UltraGoggles {
                 .title(Component.translatable("itemGroup.ultra_goggles"))
                 .withTabsBefore(CreativeModeTabs.COMBAT)
                 .icon(() -> ULTRA_GOGGLES.get().getDefaultInstance())
-                .displayItems((parameters, output) -> output.accept(ULTRA_GOGGLES.get()))
+                .displayItems((parameters, output) -> {
+                    output.accept(ULTRA_GOGGLES.get());
+                    output.accept(ROUGH_LENS.get());
+                    output.accept(ULTRA_LENS.get());
+                })
                 .build()
         );
 
