@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 
-<div style="text-align: center">
+<div align="center">
 
 <img src="icon.png" alt="Ultra Goggles Icon" width="128" height="128">
 
@@ -48,7 +48,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 ---
 
-<div style="text-align: center">
+<div align="center">
 
 *感谢您的关注！欢迎提交问题和贡献代码！*
 
